@@ -615,39 +615,6 @@ public class EditorPO extends JFrame {
 		transliterationPanel.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
-	private double calculateAvgWordLength(String content) {
-	    if (content == null || content.isEmpty()) {
-	        return 0;
-	    }
-
-	    String[] words = content.split("\\s+");
-	    int totalLength = 0;
-	    int wordCount = 0;
-
-	    for (String word : words) {
-	        if (!word.isEmpty()) {
-	            totalLength += word.length();
-	            wordCount++;
-	        }
-	    }
-
-	    return wordCount == 0 ? 0 : (double) totalLength / wordCount;
-	}
-	
-	private int calculateWordCount(String text) {
-	    if (text == null || text.trim().isEmpty()) {
-	        return 0;
-	    }
-	    return text.trim().split("\\s+").length;
-	}
-	
-	private int calculateLineCount(String content) {
-		if (content == null || content.isEmpty()) {
-	        return 0;
-	    }
-	    String[] lines = content.split("\r?\n");
-	    return lines.length;
-	}
 
 	private void openEditPanel(int fileId) {
 		currentPage = 1;
@@ -693,7 +660,7 @@ public class EditorPO extends JFrame {
 	                try {
 	                    Thread.sleep(500); 
 	                    String content = contentTextArea.getText();
-	                    int lineCount = calculateLineCount(content);
+	                    int lineCount = EditorUtils.calculateLineCount(content);
 
 	                    SwingUtilities.invokeLater(() -> {
 	                        totalLineCountLabel.setText("Lines: " + lineCount);
@@ -715,7 +682,7 @@ public class EditorPO extends JFrame {
 		            try {
 		                Thread.sleep(500); 
 		                String content = contentTextArea.getText();
-		                int wordCount = calculateWordCount(content);		                
+		                int wordCount = EditorUtils.calculateWordCount(content);		                
 		                SwingUtilities.invokeLater(() -> {
 		                    wordCountLabel.setText("Words: " + wordCount);
 		                });
@@ -734,7 +701,7 @@ public class EditorPO extends JFrame {
 	                try {
 	                    Thread.sleep(500);
 	                    String content = contentTextArea.getText();
-	                    double avgWordLength = calculateAvgWordLength(content);
+	                    double avgWordLength = EditorUtils.calculateAvgWordLength(content);
 	                    SwingUtilities.invokeLater(() -> {
 	                        avgWordLengthLabel.setText("(Avg Word Length: " + (int)avgWordLength+")");
 	                    });
