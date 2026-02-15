@@ -62,7 +62,8 @@ public class TFIDFCalculator {
 		}
 
 		for (String word : idf.keySet()) {
-			idf.put(word, Math.log((double) totalDocs / (1 + idf.get(word))));
+			// Using a smoothed IDF formula to ensure non-negative values
+			idf.put(word, Math.log((double) (totalDocs + 1) / (1 + idf.get(word))) + 1.0);
 		}
 
 		return idf;
